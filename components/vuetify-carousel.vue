@@ -4,7 +4,12 @@
     <!--  サイズをこれで制御。width, heightはpropsにしてバインド  -->
     <v-sheet width="800" height="500">
       <!-- カルーセルここから。細かい設定はDocument参照-->
-      <v-carousel height="auto">
+      <v-carousel
+        height="auto"
+        class="red--text"
+        :hide-delimiter-background="true"
+        delimiter-icon="mdi-circle blue--text"
+      >
         <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src"></v-carousel-item>
       </v-carousel>
     </v-sheet>
@@ -33,6 +38,8 @@ export default Vue.extend({
         },
       ],
     }
+  },
+  mounted() {
   }
 })
 </script>
