@@ -1,7 +1,10 @@
 <template>
-  <div>
-    <VuetifyCarousel></VuetifyCarousel>
+  <div class="container">
+    <div class="flex">
+      <VuetifyCarousel></VuetifyCarousel>
+    </div>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -31,5 +34,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-
+.container {
+  display: flex;
+}
 </style>

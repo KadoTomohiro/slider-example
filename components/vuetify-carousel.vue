@@ -1,19 +1,17 @@
 <template>
-  <!-- これがないとスタイル崩れる。逆に、これを閉じ込めておけばスタイル漏洩しないかも -->
-  <v-app>
-    <!--  サイズをこれで制御。width, heightはpropsにしてバインド  -->
-    <v-sheet width="800" height="500">
-      <!-- カルーセルここから。細かい設定はDocument参照-->
-      <v-carousel
-        height="auto"
-        class="red--text"
-        :hide-delimiter-background="true"
-        delimiter-icon="mdi-circle blue--text"
-      >
-        <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src"></v-carousel-item>
-      </v-carousel>
-    </v-sheet>
-  </v-app>
+  <div>
+    <button @click="decrement()">-</button>{{value}}<button @click="increment()">+</button>
+    <!-- これがないとスタイル崩れる。逆に、これを閉じ込めておけばスタイル漏洩しないかも -->
+    <CarouselContainer :value="value" @change="onChange">
+      <template v-for="(item, i) in items" >
+          <CarouselItem :key="i">
+            <img :src="item.src">
+          </CarouselItem>
+      </template>
+    </CarouselContainer>
+    <SlideStepper :value="value" :items="itemNames" @change="onChange">
+    </SlideStepper>
+  </div>
 </template>
 
 <script lang="ts">
@@ -23,6 +21,7 @@ export default Vue.extend({
   name: 'VuetifyCarousel',
   data() {
     return {
+      value: 3,
       items: [
         {
           src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
@@ -39,11 +38,41 @@ export default Vue.extend({
       ],
     }
   },
+  computed: {
+    itemCount(): number {
+      return this.items.length
+    },
+    itemNames(): string[] {
+      return this.items
+        .map(item => (item.src.match(/\/(?<name>[^/]*)\.jpg$/)?.groups?.name ?? 'not named'))
+    }
+  },
   mounted() {
+  },
+  methods: {
+    increment() {
+      if(this.value >= this.itemCount - 1) {
+        this.value = 0
+        return
+      }
+      this.value += 1
+    },
+    decrement() {
+      if (this.value <= 0) {
+        this.value = this.itemCount - 1
+        return
+      }
+      this.value -= 1
+    },
+    onChange(value: number) {
+      this.value = value
+    },
+
   }
 })
 </script>
 
 <style scoped>
-
+.image-panel image {
+}
 </style>
