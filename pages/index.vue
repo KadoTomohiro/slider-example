@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <input type="text">
     <div class="flex">
       <VuetifyCarousel></VuetifyCarousel>
     </div>
@@ -37,4 +38,5 @@ export default Vue.extend({
 .container {
   display: flex;
 }
+
 </style>
