@@ -1,25 +1,26 @@
 <template>
-  <!-- これがないとスタイル崩れる。逆に、これを閉じ込めておけばスタイル漏洩しないかも -->
-  <v-app class="v-application">
-    <!--  サイズをこれで制御。width, heightはpropsにしてバインド  -->
-    <v-sheet width="800" height="500">
-      <!-- カルーセルここから。細かい設定はDocument参照-->
-      <v-carousel
-        ref="carousel"
-        :value="value"
-        class="red--text"
-        :hide-delimiter-background="true"
-        delimiter-icon="mdi-circle light-blue--text text--darken-2"
-        :touch="onTouch"
-        :vertical="true"
-        @change="onChange"
-      >
-        <slot></slot>
-      </v-carousel>
-    </v-sheet>
+  <div class="my-vuetify">
+    <!-- これがないとスタイル崩れる。逆に、これを閉じ込めておけばスタイル漏洩しないかも -->
+    <v-app class="v-application ">
+      <!--  サイズをこれで制御。width, heightはpropsにしてバインド  -->
+      <v-sheet width="800" height="500">
+        <!-- カルーセルここから。細かい設定はDocument参照-->
+        <v-carousel
+          ref="carousel"
+          :value="value"
+          class="red--text"
+          :hide-delimiter-background="true"
+          delimiter-icon="mdi-circle light-blue--text text--darken-2"
+          :touch="onTouch"
+          :vertical="true"
+          @change="onChange"
+        >
+          <slot></slot>
+        </v-carousel>
+      </v-sheet>
+    </v-app>
+  </div>
 
-
-  </v-app>
 </template>
 
 <script lang="ts">
@@ -53,7 +54,10 @@ export default Vue.extend({
       return {
         left: () => {},
         right: () => {},
-        up: () => this.onChange(this.value + 1),
+        up: () => {
+          console.log('up event')
+          this.onChange(this.value + 1)
+        },
         down: () => this.onChange(this.value - 1)
       }
     }

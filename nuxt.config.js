@@ -21,7 +21,9 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    '~/assets/main.sass'
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -34,11 +36,26 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     ['@nuxtjs/vuetify', {treeShake: true}],
+    '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
-
+  modules: [
+  ],
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    postcss: {
+      plugins: {
+        'postcss-prefix-selector': {
+          prefix: '.my-vuetify',
+          transform: (_prefix, selector, prefixedSelector, filepath) => {
+            if(filepath.match(/node_modules\/vuetify/)) {
+              return prefixedSelector;
+            }
+            return selector;
+          }
+        }
+      }
+    }
+  },
 }
